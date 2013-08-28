@@ -3,25 +3,22 @@
 <head>
 	<title>Ej. Ciclos Contador de vocales</title>
 	<meta charset="utf-8"/>
+	<link rel="stylesheet" href="bootstrap.min.css">
 	<style type="text/css">
 		body{
-			background:#333;
-			color:white;
-			font-size: 16px;
-			height:500px;
-			margin:0 auto;
-			padding:1em;
-			width:960px;
+			
 		}
 	</style>
 	
 </head>
 <body>
-<section>
+<div class="container jumbotron">
 	<h1>Contador de Vocales</h1>
 	<label for="texto">Ingresa un texto</label>
-	<input type="text" id="texto"/>
-	<button id="ejecutar">Contar vocales</button>
+	<div class="form-group">
+		<input type="text" id="texto" class="form-control"/>
+	</div>
+	<button id="ejecutar" class="btn btn-success">Contar vocales</button>
 	<div id="resultados">
 		<div class="res">
 			<p>A <span id="va"></span></p>
@@ -41,7 +38,7 @@
 
 	</div>	
 	
-</section>
+</div>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 
 <script>
