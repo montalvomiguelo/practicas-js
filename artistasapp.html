@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="es">
+<head>
+	<title>Ej. Buscador de Artistas</title>
+	<meta charset="utf-8"/>
+	<style type="text/css">
+		body{
+			background:#333;
+			color:white;
+			font-size: 16px;
+			margin:0;
+			padding:0;
+			
+		}
+		.imagenalbum:hover{
+			cursor: pointer;
+		}
+		#resultado{
+			border:1px solid white;
+			margin: 0 auto;
+			padding:0;
+			
+
+		}
+	</style>
+	
+</head>
+<body>
+<section>
+	<h1>Buscador de Artistas</h1>
+	<label for="nombreartista">Ingresa tu artista:</label>
+	<input id="nombreartista" type="text"/>	
+	<button id="buscar">Buscar</button>
+	<div id="resultado"></div>
+</section>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+<script>
+
+//Globales
+
+	var last_fm_api_key ='42dad02cade7d8da9494a00d6a2fa350'; 
+	var last_fm_url = 'http://ws.audioscrobbler.com/2.0/';
+
+	var $artist = $('#nombreartista'),
+		$btnbuscar = $('#buscar'),
+		$res = $('#resultado');	
+
+	function buscamiartista(){
+		var nombre = $artist.val(),
+			api_key = last_fm_api_key;
+
+		$.ajax({
+			data: {//la información que le mando al servidor
+				artist: nombre,
+				api_key: api_key,
+				format: 'json',
+				method: 'artist.getinfo'
+			},
+			url: last_fm_url	
+		})
+		.done( desplegarinfo )	
+		$res.html( '<p>Cargando Info...</p>')
+	}	
+
+	function buscadiscos(){
+		var nombre = $artist.val(),
+			api_key = last_fm_api_key;
+
+		$.ajax({
+			data: {
+				artist: nombre,
+				api_key: api_key,
+				format: 'json',
+				method: 'artist.gettopalbums'
+			},
+			url: last_fm_url
+		})
+		.done( desplegardiscos )
+	}
+
+	function buscarcanciones (){
+		var nombre = $artist.val(),
+			album = $(this).attr('alt'),
+			api_key = last_fm_api_key;
+
+		$.ajax({
+			data: {
+				artist: nombre,
+				api_key: api_key,
+				album: album,
+				format: 'json',
+				method: 'album.getInfo'
+			},
+			url: last_fm_url
+		})
+		.done( deplegartracklist )
+	} 
+
+	function desplegarinfo( data ){
+		var miartista = data.artist,
+			html = '';
+		html += '<h2>' + miartista.name + '</h2>'	
+		html += '<img src="' + miartista.image[miartista.image.length - 1]['#text'] + '"/>'
+		html += '<p>' + miartista.bio.summary + '</p>'
+		html += '<button id="discos">Discos</button>'
+		$res.html( html );
+
+		$('#discos').on('click', buscadiscos)
+	}
+
+	function desplegardiscos( data ){
+		var discos = data.topalbums,
+			html = '';
+
+		for (var i=0; i<discos.album.length; i++){
+			html += '<h3>' + discos.album[i].name + '</h3>'
+			html += '<img src="' + discos.album[i].image[discos.album[i].image.length - 1]['#text'] + '" class="imagenalbum" alt="' + discos.album[i].name + '" />'
+		$res.html( html );
+		}
+		
+		$('.imagenalbum').on('click', buscarcanciones)
+	}
+
+	function deplegartracklist( data ){
+		var disco = data.album,
+		html = '';
+		html += '<h3>' + disco.name + '</h3>'
+		html += '<img src="' + disco.image[disco.image.length - 1]['#text'] + '" />'
+		html += '<ol>'
+		for (var i=0; i<disco.tracks.track.length; i++){
+			html += '<li>' + disco.tracks.track[i].name + '</li>'
+		}
+		html += '</ol>'
+		$res.html( html );
+		
+	}
+
+	$btnbuscar.on('click', buscamiartista)
+
+	$artist.on('keyup', function( evt ){
+		if( evt.keyCode=='13' ){
+			buscamiartista()
+		}
+	})
+</script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="es">
+<head>
+	<title>Ej. Ciclos Contador de vocales</title>
+	<meta charset="utf-8"/>
+	<style type="text/css">
+		body{
+			background:#333;
+			color:white;
+			font-size: 16px;
+			height:500px;
+			margin:0 auto;
+			padding:1em;
+			width:960px;
+		}
+	</style>
+	
+</head>
+<body>
+<section>
+	<h1>Contador de Vocales</h1>
+	<label for="texto">Ingresa un texto</label>
+	<input type="text" id="texto"/>
+	<button id="ejecutar">Contar vocales</button>
+	<div id="resultados">
+		<div class="res">
+			<p>A <span id="va"></span></p>
+		</div>
+		<div class="res">
+			<p>E <span id="ve"></span></p>
+		</div>
+		<div class="res">
+			<p>I <span id="vi"></span></p>
+		</div>
+		<div class="res">
+			<p>O <span id="vo"></span></p>
+		</div>
+		<div class="res">
+			<p>U <span id="vu"></span></p>
+		</div>
+
+	</div>	
+	
+</section>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+<script>
+//Mi contador de vocales
+	var $frase = $('#texto'),
+		$cuenta = $('#ejecutar'),
+		vocales = 'aeiou';
+	$frase.on('keyup', function( evt ){
+		if( evt.keyCode =='13' ){
+			contarvocales()
+		}
+	})	
+
+	$cuenta.on('click', contarvocales)
+
+	function contarvocales(){
+		var frase = $frase.val().toLowerCase(),
+			res = {a:0, e:0, i:0, o:0, u:0},
+			letra;
+
+		for (var i=0; i<frase.length; i++){
+			letra = frase[i];
+			if( vocales.indexOf( letra ) != -1){
+				res[letra] += 1;
+			}
+		}
+		for ( var iobjeto in res ){//iterar sobre el objeto res
+			console.log( iobjeto, res[ iobjeto ])
+			$('#'+'v'+iobjeto).text( res[ iobjeto])
+		}
+	}
+
+	
+	
+</script>
+</body>
+</html>
