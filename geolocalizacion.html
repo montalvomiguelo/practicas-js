@@ -40,14 +40,23 @@
 		navigator.geolocation.getCurrentPosition(mostrarpos, function(){$res.html ('No diste permiso para localizarte...')})
 	}
 
-	function mostrarpos( posicion ){ //objeto que tiene la posicion
+	function mostrarpos( posicion ){ //objeto que tiene la posicion o RES
 		var lat,lon,mapa_url;
 		console.log(posicion)
 		lat = posicion.coords.latitude;
 		lon = posicion.coords.longitude;
 		mapa_url = 'http://maps.googleapis.com/maps/api/staticmap?center='+lat+','+lon+'&zoom=14&size=400x300&sensor=false';
 		$res.html('latitud: '+ lat+ '<br>longitud' + lon)
-		$map.html('<img src="' + mapa_url + '"/>')
+		$map.html('<img src="' + mapa_url + '"/>' + '<figcaption id="info"></figcaption>')
+
+		$.get('http://ws.geonames.org/countryCode', {
+			type: 'json',
+			lat: lat,
+			lng: lon,
+		}, function( data ){ //callback que se ejecuta cuando recibo datos
+			console.log(data)
+			$('#info').html('<i>Pais: </i>' + data.countryName  + '<br>' + '<i>Lenguaje: </i>' + data.languages + '<br>' + '<i>Código de País: </i>' + data.countryCode);
+		})
 	}
 
 		$btn.on('click', localizame)
