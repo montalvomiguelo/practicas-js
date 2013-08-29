@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="es">
+<head>
+	<meta charset="utf-8" />
+	<title>Geolocalización</title>
+</head>
+<body>
+<p id="resultado">Click en el botón para obtener tus coordenadas...</p>
+<button id="btn_geo">Geolocalizar</button>
+
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script>
+	var $res = $('#resultado'),
+		$btn = $('#btn_geo');
+
+	function localizame(){
+		navigator.geolocation.getCurrentPosition(mostrarpos, function(){$res.html ('No diste permiso para localizarte...')})
+	}
+
+	function mostrarpos( posicion ){ //objeto que tiene la posicion
+		var lat,lon;
+		console.log(posicion)
+		lat = posicion.coords.latitude;
+		lon = posicion.coords.longitude;
+
+		$res.html('latitud: '+ lat+ '<br>longitud' + lon)
+	}
+
+		$btn.on('click', localizame)
+
+	
+</script>
+</body>
+</html>
