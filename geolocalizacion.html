@@ -3,27 +3,51 @@
 <head>
 	<meta charset="utf-8" />
 	<title>Geolocalización</title>
+	<style type="text/css">
+	body{
+		font-family: Arial, Verdana;
+		font-size:16px;
+		margin:0;
+		padding:0;
+	}
+
+	img{
+		border-radius:7px;
+	}
+	#contenedor{
+		background: #f2f2f2;
+		margin:0 auto;
+		padding:0;
+		text-align:center;
+		width: 960px;
+	}
+	</style>
 </head>
 <body>
-<p id="resultado">Click en el botón para obtener tus coordenadas...</p>
-<button id="btn_geo">Geolocalizar</button>
-
+<div id="contenedor">
+	<h1>Geolocalización</h1>
+	<p id="resultado">Click en el botón para obtener tus coordenadas...</p>
+	<button id="btn_geo">Geolocalizar</button>
+	<figure id="mapa"></figure>
+</div>
 <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 <script>
 	var $res = $('#resultado'),
-		$btn = $('#btn_geo');
+		$btn = $('#btn_geo'),
+		$map = $('#mapa');
 
 	function localizame(){
 		navigator.geolocation.getCurrentPosition(mostrarpos, function(){$res.html ('No diste permiso para localizarte...')})
 	}
 
 	function mostrarpos( posicion ){ //objeto que tiene la posicion
-		var lat,lon;
+		var lat,lon,mapa_url;
 		console.log(posicion)
 		lat = posicion.coords.latitude;
 		lon = posicion.coords.longitude;
-
+		mapa_url = 'http://maps.googleapis.com/maps/api/staticmap?center='+lat+','+lon+'&zoom=14&size=400x300&sensor=false';
 		$res.html('latitud: '+ lat+ '<br>longitud' + lon)
+		$map.html('<img src="' + mapa_url + '"/>')
 	}
 
 		$btn.on('click', localizame)
