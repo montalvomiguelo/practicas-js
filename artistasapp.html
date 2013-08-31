@@ -8,7 +8,8 @@
 			background:#333;
 			color:white;
 			font-size: 16px;
-			margin:0;
+			margin:0 auto;
+			max-width: 728px;
 			padding:0;
 			
 		}
@@ -129,7 +130,7 @@
 		html += '<img src="' + disco.image[disco.image.length - 1]['#text'] + '" />'
 		html += '<ol>'
 		for (var i=0; i<disco.tracks.track.length; i++){
-			html += '<li>' + disco.tracks.track[i].name + '</li>'
+			html += '<li><a href="http://www.youtube.com/results?search_query=' + disco.tracks.track[i].name + ' ' + disco.artist + '" target="_blank">' + disco.tracks.track[i].name + '</a></li>'
 		}
 		html += '</ol>'
 		$res.html( html );
