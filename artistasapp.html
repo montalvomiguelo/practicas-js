@@ -55,15 +55,13 @@
 		var nombre = $artist.val(),
 			api_key = last_fm_api_key;
 
-		$.ajax({
-			data: {//la información que le mando al servidor
+		$.getJSON(last_fm_url,{
 				artist: nombre,
 				api_key: api_key,
 				format: 'json',
 				method: 'artist.getinfo'
-			},
-			url: last_fm_url	
-		})
+			})
+			
 		.done( desplegarinfo )	
 		$res.html( '<p>Cargando Info...</p>')
 	}	
@@ -72,15 +70,12 @@
 		var nombre = $artist.val(),
 			api_key = last_fm_api_key;
 
-		$.ajax({
-			data: {
+		$.get(last_fm_url,{
 				artist: nombre,
 				api_key: api_key,
 				format: 'json',
 				method: 'artist.gettopalbums'
-			},
-			url: last_fm_url
-		})
+			})
 		.done( desplegardiscos )
 	}
 
