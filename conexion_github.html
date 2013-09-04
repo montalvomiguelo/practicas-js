@@ -5,15 +5,16 @@
 	<meta charset="utf-8" />
 </head>
 <body>
-<div id="result"></div>	
+	<div id="result"></div>	
+	<div id="result2"></div>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.7.2/mustache.min.js"></script>
 <script>
 (function getOrg(){
 	var url = 'https://api.github.com/orgs/',
 	org = 'mejorandola';
-	$.getJSON(url+org, function (data){
-		var view = {
+	$.getJSON(url+org, function (data){//Peticion de datos 
+		var view = {//objeto para guardar algunos datos de la organizacion
 			name: data['name'],
 			avatar: data['avatar_url'],
 			email: data.email,
@@ -22,33 +23,55 @@
 		}
 
 		var repos_url = data.repos_url,
-			members_url = data.members_url.replace('{/member}',''),
-			template;
+			members_url = data.members_url.replace('{/member}','');
+			
 
-		$.get(members_url, info_Org)
+		$.get(members_url, info_Org)//pido los miembros de la organizacion, callback para dibujar datos
 
 		$.get(repos_url, info_repos)
 
-		function info_Org (m){
+		function info_Org (m){//dibuja los datos con el template renderizado con Mustache
 			
 			view['num_miembros'] = m.length
 			
-			template = '<a href={{url}}><h2>{{name}}</h2></a>'+
+			var template = '<a href={{url}}><h2>{{name}}</h2></a>'+
 						'<figure><img src={{avatar}} /></figure>'+
 						'<p>No. Repositorios: {{num_repos}}</p>'+
 						'<p>No. Miembros: {{num_miembros}}</p>'+
 						'<a href="mailto:{{email}}">{{email}}</a>'
 
-			var output = Mustache.render(template, view)
+			var output = Mustache.render(template, view)//renderiza datos
 			
-			$('#result').html(output)
+			$('#result').html(output)//mandar datos al html
 
 		}
 
-		function info_repos (r){
-			for(key in r){
-				console.log(r[key])
-			}
+		function info_repos (r){//recibe el jsonData con los repositorios
+			var repositorio = {
+				nombre: '',
+				desc: '',
+				url_content: '',
+				url_git: '',
+			};
+			r.forEach(function(item){//Iterar el objeto r (repositorios)
+				var template = '';
+				repositorio.url_content = item.contents_url.replace('{+path}','');
+				repositorio.nombre = item.name
+				if (item.description!=''){
+					repositorio.desc = item.description
+				}else{
+					repositorio.desc = 'Sin Descripción'
+				}
+				repositorio.url_git = item.git_url
+				template = '<article><h3>{{nombre}}</h3>'+
+							'<p>{{desc}}</p>'+
+							'<a href={{url_content}}>Contenidos</a>'+
+							'</br><a href={{url_git}}>En Github</a></arcicle>';
+				var output = Mustache.render(template, repositorio)
+				console.log(output)
+				$('#result2').append(output); 
+			})
+			
 		}
 
 
