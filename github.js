@@ -59,9 +59,10 @@
 				json.forEach(function(miembro){
 					contexto.nombre = miembro.login
 					contexto.avatar = miembro.avatar_url
+					contexto.url = miembro.html_url
 					console.log(contexto)
 					template = '<figure class="avatares"><img src="{{avatar}}" class="img-rounded"/>'+
-								'<figcaption>{{nombre}}</figcaption></figure>'
+								'<figcaption><a href={{url}} target="_blank">{{nombre}}</a></figcaption></figure>'
 			
 
 					output = Mustache.render(template, contexto)
