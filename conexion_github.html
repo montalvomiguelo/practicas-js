@@ -6,92 +6,54 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="bootstrap.min.css">
 	<style type="text/css">
+	@font-face {
+	font-family: 'icomoon';
+	src:url('fonts/icomoon.eot');
+	src:url('fonts/icomoon.eot?#iefix') format('embedded-opentype'),
+		url('fonts/icomoon.woff') format('woff'),
+		url('fonts/icomoon.ttf') format('truetype'),
+		url('fonts/icomoon.svg#icomoon') format('svg');
+	font-weight: normal;
+	font-style: normal;
+	}
+
+	#result2{
+		
+	}
+
+	.dir:before{
+		content: "\e001";
+		font-size: 2em;
+		font-family: icomoon;
+		margin-right: 0.5em;
+	}
+	.espacio{
+		margin-left: 1em;
+	}
+
+	.file:before{
+		content: "\e000";
+		font-size: 2em;
+		font-family: icomoon;
+		margin-right: 0.5em;
+	}	
+
 	.jumbotron{
 		text-align: center;
 	}
-	.header{
-
-	}
+	
 	</style>
 </head>
 <body>
 	<div class="container">
-		<header class="header">
+		<header>
 			<h3 class="text-muted">CONEXIÓN A API’S: PROBANDO GITHUB API V3.0</h3>
 		</header>
 		<div id="result" class="jumbotron"></div>	
-		<section id="result2"></section>
+		<section id="result2" class="col-lg-6"></section>
 	</div>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.7.2/mustache.min.js"></script>
-<script>
-(function (){
-	var url = 'https://api.github.com/orgs/',
-	org = 'mejorandola';
-	$.getJSON(url+org, function (data){//Peticion de datos 
-		var view = {//objeto para guardar algunos datos de la organizacion
-			name: data['name'],
-			avatar: data['avatar_url'],
-			email: data.email,
-			num_repos: data.public_repos,
-			url: data.html_url
-		}
-
-		var repos_url = data.repos_url,
-			members_url = data.members_url.replace('{/member}','');
-			
-
-		$.get(members_url, info_Org)//pido los miembros de la organizacion, callback para dibujar datos
-
-		$.get(repos_url, info_repos)
-
-		function info_Org (m){//dibuja los datos con el template renderizado con Mustache
-			
-			view['num_miembros'] = m.length
-			
-			var template = '<a href={{url}}><h1>{{name}}</h1></a>'+
-						'<figure><img src={{avatar}} class="img-rounded"/></figure>'+
-						'<p class="lead">No. Repositorios: {{num_repos}}</p>'+
-						'<p clas="lead">No. Miembros: {{num_miembros}}</p>'+
-						'<a href="mailto:{{email}}">{{email}}</a>'
-
-			var output = Mustache.render(template, view)//renderiza datos
-			
-			$('#result').html(output)//mandar datos al html
-
-		}
-
-		function info_repos (r){//recibe el jsonData con los repositorios
-			var repositorio = {
-				nombre: '',
-				desc: '',
-				url_content: '',
-				url_git: '',
-			};
-			r.forEach(function(item){//Iterar el objeto r (repositorios)
-				var template = '';
-				repositorio.url_content = item.contents_url.replace('{+path}','');
-				repositorio.nombre = item.name
-				if (item.description!=''){
-					repositorio.desc = item.description
-				}else{
-					repositorio.desc = 'Sin Descripción'
-				}
-				repositorio.url_git = item.git_url
-				template = '<article><h3>{{nombre}}</h3>'+
-							'<p>{{desc}}</p>'+
-							'<a href={{url_content}}>Contenidos</a>'+
-							'</br><a href={{url_git}}>En Github</a></arcicle>';
-				var output = Mustache.render(template, repositorio)
-				console.log(output)
-				$('#result2').append(output); 
-			})
-			
-		}
-
-
-	})
-}())
-</script>
+<script src="github.js"></script>
 </body>
 </html>
