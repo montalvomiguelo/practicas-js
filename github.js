@@ -101,7 +101,7 @@
 				view.tipo = jsonData[key].type
 				view['url'] = jsonData[key].html_url
 				
-				template = '<p class={{tipo}}>{{nombre}}</p>'
+				template = '<div class={{tipo}}> <a href={{url}} target="_blank">{{nombre}}</a></div>'
 				
 				$('#result2').append(Mustache.render(template, view));
 			}
