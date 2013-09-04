@@ -26,7 +26,7 @@
 			var template = '<a href={{url}}><h1>{{name}}</h1></a>'+
 						'<figure><img src={{avatar}} class="img-rounded"/></figure>'+
 						'<p class="lead">No. Repositorios: <strong>{{num_repos}}</strong></p>'+
-						'<p clas="lead">No. Miembros: <strong>{{num_miembros}}</strong></p>'+
+						'<p clas="lead">No. Miembros: <strong id="irmiembros" class="btn btn-lg btn-link">{{num_miembros}}</strong></p>'+
 						'<a href="mailto:{{email}}" class="btn btn-lg btn-link">{{email}}</a>'+
 						'</br><button id="btn_repo" class="btn btn-success btn-lg">Repositorios</button>'
 
@@ -36,15 +36,40 @@
 
 			$('#btn_repo').on('click', function(){
 				
-				if (flag==0 || flag==2){//si esta vacio o tiene info de un solo repositorio
+				if (flag==0 || flag==2 ||flag==3){//si esta vacio o tiene info de un solo repositorio
 					$.get(repos_url, info_repos)//puedo obtener todos los repos de nuevo e imprimir la info
 					flag=1;//#result2 tiene info de todos repositorios
 					console.log(flag)
 				}
 			})
 
+			$('#irmiembros').on('click', function(){
+				miembrosinfo(m);
+			})
+
 		}
+
 	})
+		function miembrosinfo(json){
+			if(flag==0 || flag==1 || flag==2){
+				flag = 3
+				console.log(flag)
+				var contexto = {}, template, output
+				$('#result2').html('')
+				json.forEach(function(miembro){
+					contexto.nombre = miembro.login
+					contexto.avatar = miembro.avatar_url
+					console.log(contexto)
+					template = '<figure class="avatares"><img src="{{avatar}}" class="img-rounded"/>'+
+								'<figcaption>{{nombre}}</figcaption></figure>'
+			
+
+					output = Mustache.render(template, contexto)
+
+					$('#result2').prepend(output)
+				})
+			}	
+		}
 
 		function info_repos (r){//recibe el jsonData con los repositorios
 			var vista = {
@@ -77,7 +102,7 @@
 			$('.ircontent').on('click', function(){
 					var urlcont = $(this).data('urlcont');
 					flag=2;//#resul2 tiene info de un solo repo
-					
+					console.log(flag)
 					$.ajax({
 						url: urlcont
 					})
