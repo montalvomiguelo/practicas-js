@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="es">
+<head>
+	<title>CONEXIÓN A API’S: PROBANDO GITHUB API V3.0</title>
+	<meta charset="utf-8" />
+</head>
+<body>
+<div id="result"></div>	
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.7.2/mustache.min.js"></script>
+<script>
+(function getOrg(){
+	var url = 'https://api.github.com/orgs/',
+	org = 'mejorandola';
+	$.getJSON(url+org, function (data){
+		var view = {
+			name: data['name'],
+			avatar: data['avatar_url'],
+			email: data.email,
+			num_repos: data.public_repos,
+			url: data.html_url
+		}
+
+		var repos_url = data.repos_url,
+			members_url = data.members_url.replace('{/member}',''),
+			template;
+
+		$.get(members_url, info_Org)
+
+		$.get(repos_url, info_repos)
+
+		function info_Org (m){
+			
+			view['num_miembros'] = m.length
+			
+			template = '<a href={{url}}><h2>{{name}}</h2></a>'+
+						'<figure><img src={{avatar}} /></figure>'+
+						'<p>No. Repositorios: {{num_repos}}</p>'+
+						'<p>No. Miembros: {{num_miembros}}</p>'+
+						'<a href="mailto:{{email}}">{{email}}</a>'
+
+			var output = Mustache.render(template, view)
+			
+			$('#result').html(output)
+
+		}
+
+		function info_repos (r){
+			for(key in r){
+				console.log(r[key])
+			}
+		}
+
+
+	})
+}())
+</script>
+</body>
+</html>
