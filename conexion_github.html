@@ -3,14 +3,29 @@
 <head>
 	<title>CONEXIÓN A API’S: PROBANDO GITHUB API V3.0</title>
 	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="bootstrap.min.css">
+	<style type="text/css">
+	.jumbotron{
+		text-align: center;
+	}
+	.header{
+
+	}
+	</style>
 </head>
 <body>
-	<div id="result"></div>	
-	<div id="result2"></div>
+	<div class="container">
+		<header class="header">
+			<h3 class="text-muted">CONEXIÓN A API’S: PROBANDO GITHUB API V3.0</h3>
+		</header>
+		<div id="result" class="jumbotron"></div>	
+		<section id="result2"></section>
+	</div>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.7.2/mustache.min.js"></script>
 <script>
-(function getOrg(){
+(function (){
 	var url = 'https://api.github.com/orgs/',
 	org = 'mejorandola';
 	$.getJSON(url+org, function (data){//Peticion de datos 
@@ -34,10 +49,10 @@
 			
 			view['num_miembros'] = m.length
 			
-			var template = '<a href={{url}}><h2>{{name}}</h2></a>'+
-						'<figure><img src={{avatar}} /></figure>'+
-						'<p>No. Repositorios: {{num_repos}}</p>'+
-						'<p>No. Miembros: {{num_miembros}}</p>'+
+			var template = '<a href={{url}}><h1>{{name}}</h1></a>'+
+						'<figure><img src={{avatar}} class="img-rounded"/></figure>'+
+						'<p class="lead">No. Repositorios: {{num_repos}}</p>'+
+						'<p clas="lead">No. Miembros: {{num_miembros}}</p>'+
 						'<a href="mailto:{{email}}">{{email}}</a>'
 
 			var output = Mustache.render(template, view)//renderiza datos
