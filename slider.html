@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+<head>
+	<title>Slider</title>
+	<meta charset="utf-8"/>
+	<style type="text/css">
+	a
+	{
+		display: inline-block;
+		text-decoration: none;
+	}
+	body{
+		background: peru;
+		margin:0 auto;
+		max-width: 960px;
+	}
+	#contenedor
+	{
+		background: #000;				
+		overflow: hidden;
+		position: relative;
+
+	}
+	#contentSlider
+	{
+		/*-webkit-transition: all 0.5s linear; Agrega transition cuando mueve el margen*/
+		font-size: 0;
+		
+		white-space: nowrap;
+	}
+	#left
+	{
+		left:0;
+	}
+	#left, #right
+	{	
+		position: absolute;
+		top:50%;
+	}
+	#right
+	{
+		right:0%;
+	}
+	.slide{
+		background-size: 100%;
+
+	}
+	
+
+	</style>
+</head>
+<body>
+<div id="contenedor">
+	<div id="contentSlider">
+		<a href="#">
+			<div class="slide" data-background="img/slider1.jpg">
+			</div>
+		</a>
+		<a href="#">
+			<div class="slide" data-background="img/slider2.jpg">
+			</div>
+		</a>
+		<a href="#">
+			<div class="slide" data-background="img/slider3.jpg">
+			</div>
+		</a>
+		<a href="#">
+			<div class="slide" data-background="img/slider4.jpg">
+			</div>
+		</a>
+	</div>
+<button id="left">«</button>
+<button id="right">»</button>
+</div>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="slider.js"></script>
+</body>
+</html>
