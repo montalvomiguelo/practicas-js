@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="es">
+<head>
+	<title>Api de youtube</title>
+</head>
+<body>
+	<label for="txtbusqueda">Burscar Artista</label><input type="text" id="txtbusqueda" placeholder="Buscar..." /><button id="btnir">Ir</button>
+	<section id="contenedor"></section>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.7.2/mustache.min.js"></script>
+<script>
+var url = 'http://gdata.youtube.com/feeds/api/videos',
+	$boton = $('#btnir'),
+	$txtquery = $('#txtbusqueda');
+
+function mostrarvideos (jsonData){
+	var videos = jsonData.feed.entry
+	videos.forEach(Template)
+}
+
+function Template(video){
+ 	var view = {
+ 		titulo: video.title.$t,
+ 		descripcion: video.content.$t,
+ 		autor: video.author[0].name.$t,
+ 		thumb: video.media$group.media$thumbnail[1].url
+ 	}
+ 	var template = '<article><h2>{{titulo}}</h2>' + 
+ 					'<p>{{descripcion}}</p>' +
+ 					'<figure><img src="{{thumb}}"/></figure>' +
+ 					'<p>{{autor}}</p></article>'
+
+ 	var output = Mustache.render(template, view)
+ 	$('#contenedor').append(output)
+}
+
+function submit (query){
+	$('#contenedor').html('')
+ 	$.getJSON(url, {
+	'max-results': 8, 
+	alt: 'json',
+	q: query,
+	lr: 'es'
+	}) .done(mostrarvideos)
+}
+
+$boton.on('click', function (){
+	var q = $('#txtbusqueda').val()
+	submit (q)
+})
+
+$txtquery.on('keyup', function ( evt ) {
+	if (evt.keyCode==13){
+		var q = $('#txtbusqueda').val()
+		submit (q)
+	}
+})
+
+</script>
+</body>
+</html>
