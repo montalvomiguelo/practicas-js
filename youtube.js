@@ -1,4 +1,3 @@
-
 var url = 'http://gdata.youtube.com/feeds/api/videos',
 	$boton = $('#btnir'),
 	$txtquery = $('#txtbusqueda');
@@ -60,6 +59,6 @@ $txtquery.on('keyup', function ( evt ) {
 	}
 })
 
-
+submit('mejorandola')
 
 
