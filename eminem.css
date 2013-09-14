@@ -1,0 +1,64 @@
+body
+{
+	background-color:#000;
+	margin:0;
+}
+
+#contenedor
+{
+	background-color:peru;
+	border: 1px solid #fff;
+	margin:0 auto;
+	max-width: 650px;
+}
+
+#left, #right
+{
+	display: block;
+	height: 45px;
+	position:absolute;
+	top:43.8858696%;
+	width:19px;
+}
+
+#left
+{
+	background:url('http://eminem.umg.edrupalgardens.com/sites/eminem.umg.edrupalgardens.com/files/201308/arrow_left.png');
+	left:0;
+}
+
+#marco
+{
+	margin: 0 auto;
+	
+	white-space: nowrap;
+	/*width:86.1538462%;*/
+}
+
+#right
+{
+	background: url('http://eminem.umg.edrupalgardens.com/sites/eminem.umg.edrupalgardens.com/files/201308/arrow_right.png');
+	right:0;
+}
+
+#slider
+{
+	border:1px solid #000;
+	font-size: 0;
+	position:relative;
+	
+}
+
+.item_slide
+{
+	display:inline-block;
+
+}
+
+.slide
+{
+	display: inline-block;
+	height: 100%;
+	width: 100%;
+	
+}
