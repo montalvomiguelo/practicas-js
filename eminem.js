@@ -1,11 +1,9 @@
-
 //Tamaño dinamico de los items de cada slide.
 var indicador = 0, 
 	$slides = $('.slide'),
 	$siguiente = $('#right'),
 	$anterior = $('#left');
 	
-
 function coltam (){
 	for(var i=0; i<$('.slide').length; i++){ //itera cada slide
 		var $items = $('.slide')[i].children, //sus hijos ('a') item_slide
