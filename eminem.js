@@ -54,12 +54,14 @@ function mover(){
 
 }
 
-$siguiente.on('click', function(){
+$siguiente.on('click', function( evento ){
+	evento.preventDefault();
 	indicador++;
 	mover();
 });
 
-$anterior.on('click', function(){
+$anterior.on('click', function( evento ){
+	evento.preventDefault();
 	indicador--;
 	mover();
 });
