@@ -30,7 +30,7 @@ body
 #marco
 {
 	margin: 0 auto;
-	
+	overflow: hidden;
 	white-space: nowrap;
 	/*width:86.1538462%;*/
 }
@@ -47,6 +47,13 @@ body
 	font-size: 0;
 	position:relative;
 	
+}
+
+#slidesall
+{
+	width: 100%;
+	height:100%;
+	/*transition: 0.23s all linear;*/
 }
 
 .item_slide
