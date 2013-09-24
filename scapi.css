@@ -1,0 +1,23 @@
+body
+{
+	margin: 0 auto;
+	max-width: 650px;
+}
+
+iframe
+{
+	position:absolute;
+	bottom: 0;
+}
+
+
+#target
+{
+	
+}
+.slide
+{
+	height:100%;
+	position: relative;
+}
+

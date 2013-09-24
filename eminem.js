@@ -25,19 +25,21 @@ function coltam (){
 coltam();
 
 function tamano(){
+	var altoventana = $(window).height(),
+		altoheader = $('header').height();
+		console.log(altoventana+'     '+altoheader);
 	$('#marco').css({ //tamaño del marco que contiene los slides
-		'height': $('#slider').width() * 0.56338028 + 'px', //altura relativa
-		'width': $('#slider').width() -90+ 'px'
+		'height': altoventana - altoheader + 'px'
 
 	});
-	$('#slidesall').css('margin-left', -$('#slidesall').width()*indicador + 'px');
+	$($('.slide')[0]).css('margin-left', -$('#marco').width()*indicador + 'px');
 }
 tamano();
 
 $(window).resize(tamano);
 
 function mover(){
-	var contenedor = $('#slidesall');
+	var contenedor = $('.slide')[0];
 
 	if (indicador>=$slides.length){
 		indicador= 0;
@@ -64,3 +66,14 @@ $anterior.on('click', function( evento ){
 	mover();
 });
 
+$('#slider').swiperight(function(){
+	indicador--;
+	mover();
+});
+
+$('#slider').on('swipeleft', function(){
+	indicador++;
+	mover();
+});
+
+$('header nav').meanmenu();

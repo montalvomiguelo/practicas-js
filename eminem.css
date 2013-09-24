@@ -1,15 +1,53 @@
 body
 {
-	background-color:#000;
+	background-color:#000; 
 	margin:0;
 }
 
-#contenedor
+header
 {
-	background-color:peru;
-	border: 1px solid #fff;
-	margin:0 auto;
-	max-width: 650px;
+	height:42.5px;
+	width: 117.5px;
+}
+
+header h1 a
+{
+	display:block;
+	height: 42.5px;
+	width: 117.5px;
+	
+}
+header h1
+{
+	background: url("http://miguelgalindo.com/wp-content/uploads/2012/11/Miguel-Galindo-LOGO-draft-3.png") top left no-repeat;
+	background-size: 117.5px 42.5px;
+	float:left;
+	height:42.5px;
+	margin:0;
+	width: 117.5px;
+}
+
+header span
+{
+	visibility: hidden;
+}
+
+nav
+{
+	float: right;
+}
+
+nav ul
+{
+	color: #fff;
+	list-style: none;
+	margin:0;
+	padding: 0;
+}
+
+nav ul li
+{
+	display:inline-block;
 }
 
 #left, #right
@@ -24,7 +62,8 @@ body
 #left
 {
 	background:url('http://eminem.umg.edrupalgardens.com/sites/eminem.umg.edrupalgardens.com/files/201308/arrow_left.png');
-	left:0;
+	background-size: cover;
+	left:10px;
 }
 
 #marco
@@ -38,23 +77,18 @@ body
 #right
 {
 	background: url('http://eminem.umg.edrupalgardens.com/sites/eminem.umg.edrupalgardens.com/files/201308/arrow_right.png');
-	right:0;
+	right:10px;
 }
 
 #slider
 {
-	border:1px solid #000;
+	
 	font-size: 0;
 	position:relative;
 	
 }
 
-#slidesall
-{
-	width: 100%;
-	height:100%;
-	/*transition: 0.23s all linear;*/
-}
+
 
 .item_slide
 {
