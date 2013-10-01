@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="es">
+<head>
+	<title>Conceptos Avanzados de JS</title>
+</head>
+<body>
+<script>
+function cout(){
+	return function(n1,n2){
+		alert(n1+n2);
+	}
+}
+
+function imprime (param1, param2){
+	param1 = param1 || 'defecto_1';
+	param2 = param2 || 'defecto_2';
+
+	//console.log('Argumentos recibidos= ' + arguments.length);
+	//console.log('Argumentos esperados= ' + imprime.length);
+
+	console.log(param1);
+	console.log(param2);
+
+	//console.log('Argumento esperados= ' + ejemplo.length);
+	//console.log('Arbmentos recibidos= ' + imprime.length);
+
+	if (typeof(param1) == 'function' && typeof(param2) == 'object'){
+		//arguments.callee.apply(this, [param2, param1]);
+		arguments.callee.call(this, param2, param1);
+	}
+}
+
+Function.prototype.conMemoria = function(){
+	var fun_orig = this,
+		memoria = [];
+	
+	return function(){
+		//debugger;
+		console.log('Argumentos= ' + arguments);
+		memoria.push(arguments);
+		console.log(memoria);
+		return fun_orig.apply(this, arguments);
+	}
+}
+
+
+
+</script>
+</body>
+</html>
