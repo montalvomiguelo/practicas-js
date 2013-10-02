@@ -5,11 +5,20 @@
 </head>
 <body>
 <script>
+/*
+Función que retorna otra funcion la cual recibe dos parametros y los suma
+*/
 function cout(){
 	return function(n1,n2){
-		alert(n1+n2);
+		alert('suma= ' + parseInt(n1+n2));
 	}
 }
+
+var salida = cout();
+salida(23,23);
+/*llamar una funcion con callee la cual es una referencia a la funcion
+que contiene esos argumentos y con call o apply ejecutarla.
+*/
 
 function imprime (param1, param2){
 	param1 = param1 || 'defecto_1';
@@ -29,6 +38,11 @@ function imprime (param1, param2){
 		arguments.callee.call(this, param2, param1);
 	}
 }
+/*
+Extendiendo el prototipo Function con un metodo llamado conMemoria
+el cual tiene un arreglo donde se van almacenar los parametros
+y func_orig es una referencia a la funcion original.
+*/
 
 Function.prototype.conMemoria = function(){
 	var fun_orig = this,
@@ -36,14 +50,75 @@ Function.prototype.conMemoria = function(){
 	
 	return function(){
 		//debugger;
-		console.log('Argumentos= ' + arguments);
+		//console.log('Argumentos= ' + arguments);
 		memoria.push(arguments);
 		console.log(memoria);
 		return fun_orig.apply(this, arguments);
 	}
 }
+/*
+Una funcion con el metodo conMemoria asignada a una variable
+*/
+var printf = function(){
+	console.log(arguments);
+}.conMemoria();
+
+printf('ubaldo', 23);
+
+/*
+otro dejemplo de una funcion que retorna una funcion
+
+*/
+
+function supernumero(){
+	var mil = 1000,
+		res = [];
+
+	return function(numero){
+		res.push(mil*numero);
+		console.log(res);
+		return mil*numero;
+	}
+}
+
+var resultado = supernumero();
+resultado(90); // [9000] 9000
 
 
+var obtener = supernumero()(23);
+console.log(obtener); //2300
+
+
+/*
+Una extension del prototipo Function que guarda en un objeto
+llamado cache el resultado de la ejecucion de esa funcion... si
+el argumento con el que lo llamamomos ya esta en el cache, entonces
+mandamos el resultado guardado en cache y evitamos recalcular el resultado.
+*/
+
+
+Function.prototype.memoria = function(){
+	var funcion_original = this,
+	cache = {};
+
+	return function(parametro){
+		if (parametro in cache){
+			console.log(cache[parametro] + 'esta en la memoria');
+			return cache[parametro];
+		} else{
+			
+			return cache[parametro] = funcion_original.call(this, parametro);
+		}
+	}
+}
+
+var numerote = function(n){
+	return n*1000;
+}.memoria();
+
+numerote(90);
+numerote(10);
+numerote(90);
 
 </script>
 </body>
