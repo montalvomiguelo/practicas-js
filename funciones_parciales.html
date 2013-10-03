@@ -59,10 +59,6 @@ tamaño23('.listas');
 var tamaño8 = tamaño_letra.parcial('8px');
 tamaño8('.parrafos');
 
-var filtro_impares = function(element){
-	return element%2 ;
-}
-
 var filtro_alpha = function(element){
 	return /[a-z]/.exec(element);
 }
@@ -71,8 +67,12 @@ function filtrar(fil,arr){
 	return arr.filter(fil);
 }
 
-var impares = filtrar.parcial(filtro_impares),
-	nones = filtrar.parcial(filtro_impares)([1,2,3,4,5,6]);
+var impares = filtrar.parcial(function(element){
+		return element%2 ;
+	}),
+	nones = filtrar.parcial(function(element){
+		return element%2 ;
+	})([1,2,3,4,5,6]);
 
 impares([90,2,3,4,54,23,43,55,59]);
 
