@@ -16,6 +16,10 @@ function cout(){
 
 var salida = cout();
 salida(23,23);
+
+//llamada a una funcion que retorna un closure usando del closure;
+cout()(90,30);
+
 /*llamar una funcion con callee la cual es una referencia a la funcion
 que contiene esos argumentos y con call o apply ejecutarla.
 */
@@ -111,7 +115,7 @@ Function.prototype.memoria = function(){
 		}
 	}
 }
-
+//creamos una funcion anonima asignada a una variable numerote, lacual tiene el metodo memoria.
 var numerote = function(n){
 	return n*1000;
 }.memoria();
@@ -119,6 +123,12 @@ var numerote = function(n){
 numerote(90);
 numerote(10);
 numerote(90);
+
+//extendiendo la funcion seno para que no recalcule algo que ya se calculo
+var seno = Math.sin.memoria();
+seno(90);
+seno(9);
+seno(90);
 
 </script>
 </body>
